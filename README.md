@@ -67,10 +67,7 @@ zk.addEventListener('ready', async()=>{
     console.log('we got all proofs and are ready to sign transactions');
     console.log('user wallet address is: ', zk.toSuiAddress());
 
-    const client = new SuiClient({url: getFullnodeUrl('mainnet')}); // or zk.client
-
-    const result = await client.signAndExecuteTransactionBlock({
-        signer: zk,
+    const result = await zk.signAndExecuteTransactionBlock({
         transactionBlock: txb,
         requestType: 'WaitForLocalExecution',
         options: {
