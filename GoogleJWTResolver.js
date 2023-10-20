@@ -1,6 +1,6 @@
 class GoogleJWTResolver {
     constructor(params = {}) {
-        this._clientId = '623255759333-fr0ijf03itgc4t70e8aj99iud9lnsuqm.apps.googleusercontent.com';
+        this._clientId = params.clientId || null;
         this._nonce = params.nonce || null;
 
         this._jwt = null;
