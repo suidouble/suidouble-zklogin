@@ -2,7 +2,7 @@
 
 zkLogin implementation as wrapper following Sui KeyPair methods signature
 
-very alpha for now. Only `signAndExecuteTransactionBlock` is supported. Please start and wait for a release.
+very alpha for now. Only `signAndExecuteTransactionBlock` is supported. Documentation is todo. Please star and wait for a release.
 
 ### sample usage
 
@@ -27,13 +27,22 @@ console.log('restored state: ', state);
 // initialize zkLogin signer instance
 const zk = new SuidoubleZKLogin({
         provider: new SuiClient({url: getFullnodeUrl('mainnet')}),
-        prover: 'http://localhost:8095/http://host.docker.internal:8098/v1', // prover server URL
+        prover: 'http://localhost:8095/http://host.docker.internal:8098/v1', // prover server URL, you may want to use 'prover.mystenlabs.com'
         state: state,                                                        // state to be restored ( may be empty )
         salt: async(params)=>{
             console.log('asked for a salt for jwt', params.jwt, params.parsed);
-            return '129390038577185583942388216820280642146'; // should return some hash
+            return '129390038577185583942388216820280642146'; // should return some hash, you may want to use 'salt.api.mystenlabs.com' to hash jwt
         },
     });
+
+// events:
+// state 
+//     - zk.state with all proofs etc are generated and can be saved in LocalStorage
+// waitForJWT 
+//     - there's no state provided or it's outdated, so we are asking for a new JWT with new nonce. zk.setJWT(jwt) should be executed for a next step
+// ready 
+//     - everything is ready and calculated (from state or from prover) and we can sign transactions!
+
 zk.addEventListener('state', async()=>{
     console.log('got state. A place to save it somewhere in LocalStorage for example');
     console.log(zk.state);

@@ -8,11 +8,6 @@ class SuidoubleZKLogin extends EventTarget {
     constructor(params = {}) {
         super(params);
 
-        // this._suiMaster = params.suiMaster;
-        // if (!this._suiMaster) {
-        //     throw new Error('suiMaster is required');
-        // }
-
         this._provider = params.provider || null;
         this._salt = params.salt || null;
         this._prover = params.prover || null;
@@ -28,8 +23,6 @@ class SuidoubleZKLogin extends EventTarget {
         }
 
         this._forEpochs = params.forEpochs || 2;
-
-
 
         this._saltCached = null; // raw value we set after all calculations
 
@@ -261,9 +254,7 @@ class SuidoubleZKLogin extends EventTarget {
         const txb = params.transactionBlock;
 
         txb.setSenderIfNotSet(this.toSuiAddress());
-
-        console.error('client', client);
-        console.error('client', this._ephemeralKeyPair);
+        
         const { bytes, signature } = await txb.sign({
             client,
             signer: this._ephemeralKeyPair,
