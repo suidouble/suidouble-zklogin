@@ -57,7 +57,7 @@ zk.addEventListener('waitForJWT', async()=>{
         nonce: nonce,
         clientId: '2342342342-afsdfasdfsadfasdfasdfsdf.apps.googleusercontent.com',
     });
-    const jwt = await googleJWTResolver.request();
+    const jwt = await googleJWTResolver.request(nonce);
 
     console.log('got jwt from auth provider', jwt);
 
